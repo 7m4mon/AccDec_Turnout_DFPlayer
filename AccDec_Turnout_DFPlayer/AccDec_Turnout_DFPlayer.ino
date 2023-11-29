@@ -37,6 +37,8 @@ bool mcp_connected = false;
 uint8_t exp_turnout_control_pins[NUM_OF_EXP_TURNOUT][2] = 
 {{0,1},{2,3},{4,5},{6,7},{8,9},{10,11},{12,13},{14,15}};
 
+uint8_t ats_control_pins[2] = {A4,A5};          // if it did not use expanded IOs, A4, A5 controls ATS Alert signal.
+
 SoftwareSerial mySerial(PIN_DFPLAYER_RX, PIN_DFPLAYER_TX); // RX, TX
 int8_t mp3_volume = 20;
 
@@ -73,6 +75,9 @@ bool init_mcp(){
           mcp.pinMode(exp_turnout_control_pins[i][1], OUTPUT);
           mcp.digitalWrite(exp_turnout_control_pins[i][1], LOW);
         }
+     }else{
+      digitalWrite(A4, LOW);
+      digitalWrite(A5, LOW);
      }
      Serial.print("mcp_connected :");
      Serial.println(mcp_connected);
@@ -206,6 +211,16 @@ extern void notifyDccAccTurnoutOutput( uint16_t Addr, uint8_t Direction, uint8_t
         digitalWrite(PIN_ONBORD_LED, LOW);
     }else{
         Serial.println("E_N");
+        digitalWrite(PIN_ONBORD_LED, HIGH);
+        // if it did not use expanded IOs, A4, A5 controls ATS Alert signal.
+        Addr -= OFFSET_ADDR_EXP_TURNOUT;
+        if (Addr < 2) {
+          Serial.print("S");
+          Serial.print(Addr);
+          Serial.println(Direction);
+          digitalWrite(ats_control_pins[Addr], Direction);
+        }
+        digitalWrite(PIN_ONBORD_LED, LOW);
     }
   }
   else if ( Addr >= OFFSET_ADDR_MP3 && Addr < OFFSET_ADDR_MP3 + NUM_OF_MP3){
