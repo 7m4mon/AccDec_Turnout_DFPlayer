@@ -16,7 +16,7 @@ int tim_delay = 500;
 
 #define NUM_OF_TURNOUT 6
 #define NUM_OF_EXP_TURNOUT 8        // MCP23017 has 16 output pins
-#define NUM_OF_MP3 10
+#define NUM_OF_MP3 20
 #define OFFSET_ADDR_TURNOUT 1
 #define OFFSET_ADDR_EXP_TURNOUT 21
 #define OFFSET_ADDR_MP3 40
@@ -76,8 +76,11 @@ bool init_mcp(){
           mcp.digitalWrite(exp_turnout_control_pins[i][1], LOW);
         }
      }else{
-      digitalWrite(A4, LOW);
-      digitalWrite(A5, LOW);
+      Wire.end();               // important!
+      pinMode(A4, OUTPUT);      // Active Low
+      digitalWrite(A4, HIGH);
+      pinMode(A5, OUTPUT);
+      digitalWrite(A5, HIGH);
      }
      Serial.print("mcp_connected :");
      Serial.println(mcp_connected);
@@ -218,7 +221,7 @@ extern void notifyDccAccTurnoutOutput( uint16_t Addr, uint8_t Direction, uint8_t
           Serial.print("S");
           Serial.print(Addr);
           Serial.println(Direction);
-          digitalWrite(ats_control_pins[Addr], Direction);
+          digitalWrite(ats_control_pins[Addr], !Direction); // Active Low
         }
         digitalWrite(PIN_ONBORD_LED, LOW);
     }
