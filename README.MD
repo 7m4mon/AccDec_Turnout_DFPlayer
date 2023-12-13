@@ -1,5 +1,7 @@
 [![](https://img.youtube.com/vi/ls2syfCY4T8/0.jpg)](https://www.youtube.com/watch?v=ls2syfCY4T8)
 
+[![](https://img.youtube.com/vi/UyAax21FSbk/0.jpg)](https://www.youtube.com/watch?v=UyAax21FSbk)
+
 http://nomulabo.com/dcc_compsite_device/
 
 # AccDec_Turnout_DFPlayer
