@@ -20,7 +20,7 @@ int tim_delay = 500;
 #define OFFSET_ADDR_TURNOUT 1
 #define OFFSET_ADDR_EXP_TURNOUT 21
 #define OFFSET_ADDR_MP3 40
-#define TURNOUT_HOLD_TIME_MS 200    // Commands may be not received during this time.
+#define TURNOUT_HOLD_TIME_MS 45    // Commands may be not received during this time. minimum is 10.
 
 #define PIN_DCC_COM_IN 2
 uint8_t turnout_control_pins[NUM_OF_TURNOUT][2] = 
